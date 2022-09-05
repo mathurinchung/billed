@@ -1,0 +1,3 @@
+[submodule "backend"]
+	path = backend
+	url = git@mathurinchung.github.com:OpenClassrooms-Student-Center/Billed-app-FR-back.git
