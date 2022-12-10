@@ -18,9 +18,7 @@ export const filteredBills = (data, status) => {
       else {
         // in prod environment
         const userEmail = JSON.parse(localStorage.getItem("user")).email;
-        selectCondition =
-          (bill.status === status) &&
-          ![...USERS_TEST, userEmail].includes(bill.email);
+        selectCondition = (bill.status === status) && ![...USERS_TEST, userEmail].includes(bill.email);
       }
 
       return selectCondition;
@@ -29,10 +27,8 @@ export const filteredBills = (data, status) => {
 
 export const card = bill => {
   const firstAndLastNames = bill.email.split("@")[0]
-  const firstName = firstAndLastNames.includes(".") ?
-    firstAndLastNames.split(".")[0] : "";
-  const lastName = firstAndLastNames.includes(".") ?
-    firstAndLastNames.split(".")[1] : firstAndLastNames;
+  const firstName = firstAndLastNames.includes(".") ? firstAndLastNames.split(".")[0] : "";
+  const lastName = firstAndLastNames.includes(".") ? firstAndLastNames.split(".")[1] : firstAndLastNames;
 
   return (`
     <div class='bill-card' id='open-bill${ bill.id }' data-testid='open-bill${ bill.id }'>
@@ -72,6 +68,7 @@ export default class {
     this.document = document;
     this.onNavigate = onNavigate;
     this.store = store;
+
     $("#arrow-icon1").click(e => this.handleShowTickets(e, bills, 1));
     $("#arrow-icon2").click(e => this.handleShowTickets(e, bills, 2));
     $("#arrow-icon3").click(e => this.handleShowTickets(e, bills, 3));
@@ -123,8 +120,8 @@ export default class {
   };
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
-    if (this.index === undefined || this.index !== index) this.index = index
+    if (this.counter === undefined || this.index !== index) this.counter = 0;
+    if (this.index === undefined || this.index !== index) this.index = index;
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${ this.index }`).css({ transform: "rotate(0deg)"});
       $(`#status-bills-container${ this.index }`).html(cards(filteredBills(bills, getStatus(this.index))));
@@ -135,8 +132,9 @@ export default class {
       this.counter ++;
     }
 
-    bills.forEach(bill => { $(`#open-bill${ bill.id }`).click(e => this.handleEditTicket(e, bill, bills)); });
-
+    // [Bug hunt] - Dashboard | High 🔥
+    // bills.forEach(bill => { $(`#open-bill${ bill.id }`).click(e => this.handleEditTicket(e, bill, bills)); });
+    bills.forEach(bill => $(`#status-bills-container${ this.index } #open-bill${ bill.id }`).click(e => this.handleEditTicket(e, bill, bills)));
     return bills;
   }
 
