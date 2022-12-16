@@ -21,27 +21,38 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault();
 
+    // [Bug hunt] - NewBills | High 🔥
     const file = this.document.querySelector("input[data-testid='file']").files[0];
     const filePath = e.target.value.split(/\\/g);
     const fileName = filePath[filePath.length-1];
-    const formData = new FormData();
+    const mimeTypes = ["image/jpg", "image/jpeg", "image/png"]; // A list of allowed file types (MIME types)
     const email = JSON.parse(localStorage.getItem("user")).email;
+
+    const formData = new FormData();
     formData.append("file", file);
     formData.append("email", email);
 
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: { noContentType: true }
-      })
-      .then(({ fileUrl, key }) => {
-        console.log(fileUrl);
-        this.billId = key;
-        this.fileUrl = fileUrl;
-        this.fileName = fileName;
-      })
-      .catch(error => console.error(error));
+    // If the file type is included in the list of allowed file types,
+    // create a new bill with the file and email using the bills store's create method
+    if (mimeTypes.includes(file.type)) {
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: { noContentType: true }
+        })
+        .then(({ fileUrl, key }) => {
+          console.log(fileUrl);
+          this.billId = key;
+          this.fileUrl = fileUrl;
+          this.fileName = fileName;
+        })
+        .catch(error => console.error(error));
+    } else {
+      // If the file type is not allowed, show an alert and reset the file input's value
+      alert("Le format du fichier doit être en .JPG, .JPEG ou .PNG")
+      e.target.value = "";
+    }
   };
 
   handleSubmit = e => {
