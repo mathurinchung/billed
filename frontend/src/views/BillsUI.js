@@ -12,15 +12,18 @@ const row = bill => {
       <td>${bill.date}</td>
       <td>${bill.amount} €</td>
       <td>${bill.status}</td>
-      <td>
-        ${Actions(bill.fileUrl)}
-      </td>
+      <td>${Actions(bill.fileUrl)}</td>
     </tr>
   `);
 };
 
 const rows = data => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : "";
+  // [Bug report] - Bills | High 🔥
+  // return (data && data.length) ? data.map(bill => row(bill)).join("") : "";
+  return (data && data.length) ? data
+    .sort((a, b) => (a.date > b.date) ? 1 : -1)
+    .map(bill => row(bill))
+    .join("") : "";
 };
 
 export default ({ data: bills, loading, error }) => {  
