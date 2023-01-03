@@ -85,7 +85,7 @@ describe("Given I am connected as an Admin", () => {
   });
 
   describe("When I am on Dashboard page and I click on edit icon of a card", () => {
-    test("Then, right form should be filled",  () => {
+    test("Then, right form should be filled", () => {
       const onNavigate = pathname => { document.body.innerHTML = ROUTES({ pathname }); };
       Object.defineProperty(window, "localStorage", { value: localStorageMock });
       window.localStorage.setItem("user", JSON.stringify({ type: "Admin" }));
@@ -104,7 +104,7 @@ describe("Given I am connected as an Admin", () => {
   });
 
   describe("When I am on Dashboard page and I click 2 times on edit icon of a card", () => {
-    test("Then, big bill Icon should Appear",  () => {
+    test("Then, big bill Icon should Appear", () => {
       const onNavigate = pathname => { document.body.innerHTML = ROUTES({ pathname }); };
       Object.defineProperty(window, "localStorage", { value: localStorageMock });
       window.localStorage.setItem("user", JSON.stringify({ type: "Admin" }));
@@ -222,7 +222,7 @@ describe("Given I am a user connected as Admin", () => {
 
       test("fetches bills from an API and fails with 404 message error", async () => {
         mockStore.bills.mockImplementationOnce(() => {
-          return { list : () =>  { return Promise.reject(new Error("Erreur 404")); }};
+          return { list: () => { return Promise.reject(new Error("Erreur 404")); }};
         });
 
         window.onNavigate(ROUTES_PATH.Dashboard);
@@ -233,7 +233,7 @@ describe("Given I am a user connected as Admin", () => {
 
       test("fetches messages from an API and fails with 500 message error", async () => {
         mockStore.bills.mockImplementationOnce(() => {
-          return { list : () => { return Promise.reject(new Error("Erreur 500")); }};
+          return { list: () => { return Promise.reject(new Error("Erreur 500")); }};
         });
 
         window.onNavigate(ROUTES_PATH.Dashboard);
