@@ -27,11 +27,11 @@ describe("Given I am connected as an employee", () => {
       expect(mailIcon).toBeTruthy();
     });
 
-    test("Then ...", () => {
-      const html = NewBillUI();
-      document.body.innerHTML = html;
-      //to-do write assertion
-    });
+    // test("Then ...", () => {
+    //   const html = NewBillUI();
+    //   document.body.innerHTML = html;
+    //   //to-do write assertion
+    // });
   });
 
   // test d'intégration POST
